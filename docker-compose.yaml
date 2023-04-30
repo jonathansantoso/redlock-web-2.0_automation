@@ -1,0 +1,25 @@
+version: '3'
+services:
+  www:
+    image: php:apache
+    volumes:
+      - "./:/var/www/html"
+    ports:
+      - 8282:80
+      - 443:443
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=redlock
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=password1
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - "./redlockDatabase:/docker-entrypoint-initdb.d"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8383:80
+    environment:
+      - PMS_HOST=172.21.0.2
+      - PMS_PORT=3306
